@@ -24,9 +24,15 @@ Github.prototype._client_secret = null;
 Github.prototype.token = null;
 
 /**
- * options.hostname
- * options.pathname
- * options.query
+ *
+ * perform an api call.
+ * if options is a string, a HTTP GET request is made with options as the pathname. 
+ * Otherwise you can use standard http module request parameters. 
+ *
+ * Any post data should be included via options.params
+ * 
+ * options.path
+ * options.params
  * 
  * @param  {[type]}   options  [description]
  * @param  {Function} callback [description]
@@ -74,6 +80,14 @@ Github.prototype.call = function (options, callback) {
 	});
 };
 
+/**
+ * build the authorization url
+ * 
+ * @param  {[type]} redirect_uri [description]
+ * @param  {[type]} scope        [description]
+ * @param  {[type]} state        [description]
+ * @return {[type]}              [description]
+ */
 Github.prototype.buildAuthUrl = function (redirect_uri, scope, state) {
 	var params = {
 		client_id : this._client_id
@@ -98,6 +112,14 @@ Github.prototype.buildAuthUrl = function (redirect_uri, scope, state) {
 	return uris.authorization + '?' + qs_module.stringify(params);
 };
 
+/**
+ * exchange an authorization code for an access token
+ * 
+ * @param  {[type]}   code     [description]
+ * @param  {[type]}   state    [description]
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
 Github.prototype.accessToken = function (code, state, callback) {
 	if (!callback) {
 		callback = state;
