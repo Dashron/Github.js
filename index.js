@@ -1,0 +1,1 @@
+module.exports.Github = require('./libs/github').Github;
