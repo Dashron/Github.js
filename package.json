@@ -7,5 +7,6 @@
     "type": "git",
     "url": "git://github.com/Dashron/Github.js.git"
   },
-  "author": "Aaron Hedges"
+  "author": "Aaron Hedges",
+  "private": true
 }
