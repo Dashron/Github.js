@@ -1,3 +1,9 @@
+/*
+* Github.js
+* Copyright(c) 2013 Aaron Hedges <aaron@dashron.com>
+* MIT Licensed
+*/
+
 var https_module = require('https');
 var qs_module = require('querystring');
 var url_module = require('url');
