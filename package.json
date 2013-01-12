@@ -1,0 +1,14 @@
+{
+	"name": "github",
+	"version": "1.0",
+	"author": {
+		"name": "Aaron Hedges",
+		"email": "aaron@dashron.com",
+		"url": "www.dashron.com"
+	},
+	"description" : "a barebones node library for the github api",
+	"repository" : { 
+		"type" : "git",
+		 "url" : "git://github.com/Dashron/Github.js.git"
+	},
+}
