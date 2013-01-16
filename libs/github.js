@@ -54,8 +54,16 @@ Github.prototype.call = function (options, callback) {
 		options.headers = {};
 	}
 
+	if (typeof options.method != "string") {
+		options.method = 'GET';
+	}
+
 	options.query.access_token = this.token;
 	options.headers.accept = 'application/vnd.github.v3.raw+json';
+
+	if (options.method === 'GET' && typeof options.query === 'object') {
+		options.path += '?' + qs_module.stringify(options.query);
+	}
 
 	var request = https_module.request(options, function (res) {
 		var buffer = '';
