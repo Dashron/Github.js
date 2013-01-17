@@ -50,8 +50,8 @@ Github.prototype.call = function (options, callback) {
 		options.host = uris.host;
 	}
 
-	if (typeof options.params != "object") {
-		options.params = {};
+	if (typeof options.query != "object") {
+		options.query = {};
 	}
 
 	if (typeof options.headers != "object") {
@@ -62,11 +62,11 @@ Github.prototype.call = function (options, callback) {
 		options.method = 'GET';
 	}
 
-	options.params.access_token = this.token;
+	options.query.access_token = this.token;
 	options.headers.accept = 'application/vnd.github.v3.raw+json';
 
-	if (options.method === 'GET' && typeof options.params === 'object') {
-		options.path += '?' + qs_module.stringify(options.params);
+	if (options.method === 'GET' && typeof options.query === 'object') {
+		options.path += '?' + qs_module.stringify(options.query);
 	}
 
 	var request = https_module.request(options, function (res) {
@@ -81,8 +81,8 @@ Github.prototype.call = function (options, callback) {
 		});
 	});
 
-	if (options.params) {
-		request.write(qs_module.stringify(options.params));
+	if (options.method != 'GET' && typeof options.query === 'object') {
+		request.write(qs_module.stringify(options.query));
 	}
 
 	request.end();
