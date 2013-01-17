@@ -46,6 +46,10 @@ Github.prototype.call = function (options, callback) {
 		options.path = pathname;
 	}
 
+	if (typeof options.host != "string") {
+		options.host = uris.host;
+	}
+
 	if (typeof options.query != "object") {
 		options.query = {};
 	}
