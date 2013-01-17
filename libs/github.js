@@ -9,7 +9,7 @@ var qs_module = require('querystring');
 var url_module = require('url');
 
 var uris = module.exports.uris = {
-	host : 'https://api.github.com',
+	host : 'api.github.com',
 	authorization : 'https://github.com/login/oauth/authorize',
 	access : 'https://github.com/login/oauth/access_token'
 }
