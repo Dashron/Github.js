@@ -77,7 +77,7 @@ Github.prototype.call = function (options, callback) {
 		});
 
 		res.on('end', function () {
-			callback(null, JSON.parse(buffer));
+			callback(null, JSON.parse(buffer), res.statusCode);
 		});
 	});
 
