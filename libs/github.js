@@ -77,7 +77,12 @@ Github.prototype.call = function (options, callback) {
 		});
 
 		res.on('end', function () {
-			callback(null, JSON.parse(buffer), res.statusCode);
+			if (res.statusCode > 399) {
+				var error = new Error('HTTP Error [' + res.statusCode + '] experienced while communicating with github');
+				error.status = res.statusCode;
+				return callback(error);
+			}
+			return callback(null, JSON.parse(buffer), res.statusCode);
 		});
 	});
 
