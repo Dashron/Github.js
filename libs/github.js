@@ -14,14 +14,16 @@ var uris = module.exports.uris = {
 	access : 'https://github.com/login/oauth/access_token'
 }
 
-var Github = module.exports.Github = function Github (client_id, client_secret) {
+var Github = module.exports.Github = function Github (client_id, client_secret, user_agent) {
 	this._client_id = client_id;
 	this._client_secret = client_secret;
+	this._ua = user_agent;
 };
 
 Github.prototype._client_id = null;
 Github.prototype._client_secret = null;
 Github.prototype.token = null;
+Github.prototype._ua = null;
 
 /**
  *
@@ -50,11 +52,11 @@ Github.prototype.call = function (options, callback) {
 		options.host = uris.host;
 	}
 
-	if (typeof options.query != "object") {
+	if (typeof options.query != "object" || options.query == null) {
 		options.query = {};
 	}
 
-	if (typeof options.headers != "object") {
+	if (typeof options.headers != "object" || options.headers == null) {
 		options.headers = {};
 	}
 
@@ -64,7 +66,8 @@ Github.prototype.call = function (options, callback) {
 
 	options.query.access_token = this.token;
 	options.headers.accept = 'application/vnd.github.v3.raw+json';
-
+	options.headers['User-Agent'] = this._ua;
+	
 	if (options.method === 'GET' && typeof options.query === 'object') {
 		options.path += '?' + qs_module.stringify(options.query);
 	}
@@ -80,7 +83,8 @@ Github.prototype.call = function (options, callback) {
 			if (res.statusCode > 399) {
 				var error = new Error('HTTP Error [' + res.statusCode + '] experienced while communicating with github');
 				error.status = res.statusCode;
-				return callback(error);
+				console.log(buffer);
+				return callback(error, buffer, res.statusCode);
 			}
 			return callback(null, JSON.parse(buffer), res.statusCode);
 		});
