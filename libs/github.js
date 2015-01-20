@@ -44,8 +44,12 @@ Github.prototype.call = function (options, callback) {
 
 	if (typeof options === "string") {
 		var pathname = options;
+		var path_parts = null;
+
 		options = url_module.parse(uris.host);
-		options.path = pathname;
+		path_parts = url_module.parse(pathname);
+
+		options.path = path_parts.pathname;
 	}
 
 	if (typeof options.host != "string") {
@@ -86,7 +90,12 @@ Github.prototype.call = function (options, callback) {
 				console.log(buffer);
 				return callback(error, buffer, res.statusCode);
 			}
-			return callback(null, JSON.parse(buffer), res.statusCode);
+
+			if (res.headers['content-type'].indexOf('application/json') !== -1) {
+				return callback(null, JSON.parse(buffer), res.statusCode);
+			} else {
+				return callback(null, buffer, res.statusCode);
+			}
 		});
 	});
 
