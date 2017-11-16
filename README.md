@@ -1,4 +1,3 @@
-Github.js
-=========
+# Github.js
 
-Node.js github library
+This was an old, quick, simple library to use the GitHub API.
